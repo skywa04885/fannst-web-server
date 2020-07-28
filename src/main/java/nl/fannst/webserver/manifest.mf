@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: Luke Rieff
+Built-By: Luke Rieff
+Build-Jdk: 14
+Main-Class: nl.fannst.webserver.App
