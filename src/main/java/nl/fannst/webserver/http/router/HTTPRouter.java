@@ -13,9 +13,9 @@
 
 package nl.fannst.webserver.http.router;
 
-import nl.fannst.webserver.HTTPProperties;
+import nl.fannst.webserver.http.HTTPProperties;
 
 public class HTTPRouter
 {
-	
+
 };
