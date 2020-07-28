@@ -18,7 +18,9 @@ import java.io.*;
 import java.net.*;
 import nl.fannst.webserver.Logger;
 import nl.fannst.webserver.http.HTTPCommand;
+import nl.fannst.webserver.http.HTTPResponse;
 import nl.fannst.webserver.http.exceptions.HTTPSyntaxException;
+import nl.fannst.webserver.http.HTTPProperties;
 
 public class HTTPHandler extends Thread
 {
@@ -80,14 +82,36 @@ public class HTTPHandler extends Thread
 				// Parses the HTTPCommand
 				HTTPCommand command = new HTTPCommand(message);
 				command.print(this.console);
+
+				HTTPResponse response = new HTTPResponse(this.h_Client);
+				switch (command.c_Method)
+				{
+					case GET -> {
+						response
+							.zip()
+							.code(404)
+							.url(command.c_URL)
+							.sendHTML("./html/404.html");
+						this.h_Client.close();
+					}
+				}
 			}
 		} catch (HTTPSyntaxException e)
 		{
-
+			this.console.log("Syntax exception: " + e.getMessage(), 
+				Logger.Level.ERROR);
 		} catch (Exception e)
 		{
-			// Prints the error
 			this.console.log("An exception occured: " + e.getMessage(), 
+				Logger.Level.ERROR);
+		}
+
+		// Closes the socket
+		try {
+			this.h_Client.close();
+		} catch (IOException e)
+		{
+			this.console.log("Could not close socket: " + e.getMessage(), 
 				Logger.Level.ERROR);
 		}
 

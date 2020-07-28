@@ -15,25 +15,16 @@ package nl.fannst.webserver.http;
 
 import java.util.HashMap;
 import nl.fannst.webserver.http.HTTPHeader;
+import nl.fannst.webserver.http.HTTPProperties;
 import nl.fannst.webserver.Logger;
 import nl.fannst.webserver.http.exceptions.HTTPSyntaxException;
 
 public class HTTPCommand
 {
-	private Method c_Method;
-	private String c_URL;
-	private Version c_Version;
-	private HashMap<String, String> c_Headers;
-
-	public enum Version
-	{
-		HTTP1_1, HTTP1_0
-	}
-
-	public enum Method
-	{
-		GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, CONNECT, PATCH
-	};
+	public HTTPProperties.Method c_Method;
+	public String c_URL;
+	public HTTPProperties.Version c_Version;
+	public HashMap<String, String> c_Headers;
 
 	/**
 	 * Prints the HTTPCommand
@@ -100,31 +91,31 @@ public class HTTPCommand
 		switch (headSegments[0])
 		{
 			case "GET" -> {
-				this.c_Method = Method.GET;
+				this.c_Method = HTTPProperties.Method.GET;
 			}
 			case "HEAD" -> {
-				this.c_Method = Method.HEAD;
+				this.c_Method = HTTPProperties.Method.HEAD;
 			}
 			case "POST" -> {
-				this.c_Method = Method.POST;
+				this.c_Method = HTTPProperties.Method.POST;
 			}
 			case "PUT" -> {
-				this.c_Method = Method.PUT;
+				this.c_Method = HTTPProperties.Method.PUT;
 			}
 			case "DELETE" -> {
-				this.c_Method = Method.DELETE;
+				this.c_Method = HTTPProperties.Method.DELETE;
 			}
 			case "TRACE" -> {
-				this.c_Method = Method.TRACE;
+				this.c_Method = HTTPProperties.Method.TRACE;
 			}
 			case "OPTIONS" -> {
-				this.c_Method = Method.OPTIONS;
+				this.c_Method = HTTPProperties.Method.OPTIONS;
 			}
 			case "CONNECT" -> {
-				this.c_Method = Method.CONNECT;
+				this.c_Method = HTTPProperties.Method.CONNECT;
 			}
 			case "PATCH" -> {
-				this.c_Method = Method.PATCH;
+				this.c_Method = HTTPProperties.Method.PATCH;
 			}
 			default -> {
 				throw new HTTPSyntaxException("Invalid method");
@@ -138,10 +129,10 @@ public class HTTPCommand
 		switch (headSegments[2])
 		{
 			case "HTTP/1.1" -> {
-				this.c_Version = Version.HTTP1_1;
+				this.c_Version = HTTPProperties.Version.HTTP1_1;
 			}
 			case "HTTP/1.0" -> {
-				this.c_Version = Version.HTTP1_0;
+				this.c_Version = HTTPProperties.Version.HTTP1_0;
 			}
 			default -> {
 				throw new HTTPSyntaxException("Invalid version");

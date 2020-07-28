@@ -19,6 +19,17 @@ import nl.fannst.webserver.http.exceptions.HTTPSyntaxException;
 
 public class HTTPHeader
 {
+	public static String buildHeaders(HashMap<String, String> headers)
+	{
+		StringBuilder result = new StringBuilder();
+
+		// Builds the result
+		for (String key : headers.keySet())
+			result.append(key).append(": ").append(headers.get(key)).append("\r\n");
+
+		return result.toString();
+	}
+
 	public static HashMap<String, String> parseHeaders(String raw) throws HTTPSyntaxException
 	{
 		HashMap<String, String> headers = new HashMap<String, String>();
