@@ -83,15 +83,29 @@ public class HTTPHandler extends Thread
 				HTTPCommand command = new HTTPCommand(message);
 				command.print(this.console);
 
+				// ==================================================
+				// Sends the response
+				//
+				// Checks, and tries to send the response
+				// ==================================================
+
+				// Creates the response, checks if we are allowed
+				// - to perform gzip
 				HTTPResponse response = new HTTPResponse(this.h_Client);
+
+				String encoding;
+				if ((encoding = command.c_Headers.get("accept-encoding")) != null)
+					if (encoding.contains("gzip"))
+						response.zip();
+
+				// Checks which method, and responds
 				switch (command.c_Method)
 				{
 					case GET -> {
 						response
-							.zip()
 							.code(404)
 							.url(command.c_URL)
-							.sendHTML("./html/404.html");
+							.sendHTML("./default/static/404.html");
 						this.h_Client.close();
 					}
 				}
